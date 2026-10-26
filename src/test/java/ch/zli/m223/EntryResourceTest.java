@@ -67,4 +67,37 @@ public class EntryResourceTest {
              .statusCode(404);
     }
 
+    @Test
+    public void testEntryValidation() {
+        // Check-out fehlt
+        given()
+          .contentType("application/json")
+          .body("""
+              {"checkIn":"2026-09-29T08:00:00"}
+              """)
+          .when().post("/entries")
+          .then()
+             .statusCode(400);
+
+        // Check-in liegt nach Check-out
+        given()
+          .contentType("application/json")
+          .body("""
+              {"checkIn":"2026-09-29T17:00:00","checkOut":"2026-09-29T08:00:00"}
+              """)
+          .when().post("/entries")
+          .then()
+             .statusCode(400);
+
+        // Auch beim Ändern wird geprüft
+        given()
+          .contentType("application/json")
+          .body("""
+              {"checkIn":"2026-09-29T17:00:00","checkOut":"2026-09-29T08:00:00"}
+              """)
+          .when().put("/entries/1")
+          .then()
+             .statusCode(400);
+    }
+
 }
