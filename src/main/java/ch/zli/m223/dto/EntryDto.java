@@ -1,6 +1,8 @@
 package ch.zli.m223.dto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
@@ -20,6 +22,10 @@ public class EntryDto {
 
     @NotNull(message = "Check-out is required")
     private LocalDateTime checkOut;
+
+    private Long categoryId;
+
+    private List<Long> tagIds = new ArrayList<>();
 
     @AssertTrue(message = "Check-in must be before check-out")
     @JsonIgnore
@@ -53,5 +59,21 @@ public class EntryDto {
 
     public void setCheckOut(LocalDateTime checkOut) {
         this.checkOut = checkOut;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public List<Long> getTagIds() {
+        return tagIds;
+    }
+
+    public void setTagIds(List<Long> tagIds) {
+        this.tagIds = tagIds;
     }
 }

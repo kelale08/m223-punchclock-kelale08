@@ -36,10 +36,20 @@ public class EntryService {
         }
         existing.setCheckIn(entry.getCheckIn());
         existing.setCheckOut(entry.getCheckOut());
+        existing.setCategory(entry.getCategory());
+        existing.setTags(entry.getTags());
         return existing;
     }
 
     public List<Entry> findAll() {
         return entryRepository.listAll();
+    }
+
+    public Entry findById(Long id) {
+        Entry entry = entryRepository.findById(id);
+        if (entry == null) {
+            throw new NotFoundException("Entry not found");
+        }
+        return entry;
     }
 }
